@@ -37,19 +37,9 @@ TEST(TestIsAmicableNumber, ReturnsFalseFor284AndDoesNotReach220)
 TEST(TestGetAmicNumbers, SumOfAmicNumbersUntil284ShouldBe504)
 {
 	unsigned long ex_sum = 504;
-	unsigned long ac_sum = 0;
 
 	AmicableNumbers an;
-	std::deque<possAmicableNumber> pANs = an.getPossAmicUntil(284);
-
-	for (const auto& pAN : pANs)
-	{
-		if (pAN.isAmicable)
-		{
-			ac_sum += pAN.number;
-		}
-	}
-
+	unsigned long ac_sum = an.getSumOfAmicNumbers(284);
 
 
 	EXPECT_EQ(ex_sum, ac_sum);

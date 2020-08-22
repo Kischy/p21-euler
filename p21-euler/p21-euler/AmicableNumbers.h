@@ -16,7 +16,39 @@ class AmicableNumbers
 private:
 	Divisors divisors;
 
+
+	bool isAmicablePair(numAndSumDivisors lhs, numAndSumDivisors rhs)
+	{
+		if (lhs.number != rhs.number)
+		{
+			if (lhs.number == rhs.sumOfDivisors && rhs.number == lhs.sumOfDivisors)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 public:
+	unsigned int getSumOfAmicNumbers(const unsigned int upperLimit)
+	{
+		unsigned long sum = 0;
+
+		std::deque<possAmicableNumber> pANs = getPossAmicUntil(upperLimit);
+
+		for (const auto& pAN : pANs)
+		{
+			if (pAN.isAmicable)
+			{
+				sum += pAN.number;
+			}
+		}
+
+		return sum;
+	}
+
+
 	std::deque<possAmicableNumber> getPossAmicUntil(const unsigned int upperLimit)
 	{
 		std::deque<numAndSumDivisors> numDivs = divisors.getSumsOfDivisorsUntil(upperLimit);
@@ -42,17 +74,15 @@ public:
 
 	bool isAmicableNumber(const unsigned int number, const std::deque<numAndSumDivisors> & numDivs)
 	{
-
-		unsigned int sumDivNumber = divisors.sumOfDivisors(number);
+		numAndSumDivisors num;
+		num.number = number;
+		num.sumOfDivisors = divisors.sumOfDivisors(number);		
 
 		for (const auto& nd: numDivs)
 		{
-			if (number != nd.number)
+			if (isAmicablePair(num,nd))
 			{
-				if (nd.sumOfDivisors == number && nd.number == sumDivNumber)
-				{
-					return true;
-				}
+				return true;
 			}
 		}
 
